@@ -1,2 +1,9 @@
-<textarea *ngIf="config" #editor cols="30" rows="10"></textarea>
-<button type="button" (click)='getValue(editor.value)'>GET VALUE</button>
+<textarea *ngIf="default; else noConfig" #editor cols="30" rows="10"></textarea>
+<ng-template #noConfig>
+  <div style="display: flex; flex-direction: row; align-items: center;">
+    <img src="assets/warning.ico" height="20" style="padding-right:.5em;" />
+    <p>Open console for details!</p>
+  </div>
+</ng-template>
+
+<!-- <button type="button" (click)="getValue(editor.value)">GET VALUE</button> -->

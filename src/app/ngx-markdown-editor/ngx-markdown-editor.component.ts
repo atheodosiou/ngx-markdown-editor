@@ -1,52 +1,31 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, AfterContentChecked, AfterContentInit, Input } from '@angular/core';
 import * as SimpleMDE from 'simplemde';
+import { IConfig } from './configurations/IConfig';
 @Component({
   selector: 'ngx-markdown-editor',
   templateUrl: './ngx-markdown-editor.component.html',
   styleUrls: ['./ngx-markdown-editor.component.scss']
 })
-export class NgxMarkdownEditorComponent implements  AfterViewInit{
+export class NgxMarkdownEditorComponent implements AfterViewInit {
 
-  simplemde:any;
-  @ViewChild('editor',{static:false}) editor:ElementRef;
-  @Input() config:any;
+  simplemde: any;
+  @ViewChild('editor', { static: false }) editor: ElementRef;
+  @Input() config: IConfig;
+  //Set the default toolbar if set to true
+  @Input() default: boolean = true;
 
-  constructor() { 
-    console.log('constructor')
+  constructor() {
   }
   ngAfterViewInit(): void {
-    this.simplemde = new SimpleMDE({
-      element:this.editor.nativeElement,
-      toolbar: [{
-        name: "bold",
-        action: SimpleMDE.toggleBold,
-        className: "fa fa-bold",
-        title: "Bold",
-      },
-      {
-        name: "italic",
-        action: SimpleMDE.toggleItalic,
-        className: "fa fa-italic",
-        title: "Italic",
-      }
-      ,
-      {
-        name: "table",
-        action: SimpleMDE.drawTable,
-        className: "fa fa-table",
-        title: "Insert Table",
-      },
-      {
-        name: "preview",
-        action: SimpleMDE.togglePreview,
-        className: "fa fa-eye no-disable",
-        title: "Toggle Preview",
-      }
-    ]
-    });
+    if (this.default) {
+      this.simplemde = new SimpleMDE({ element: this.editor.nativeElement });
+    } else {
+      this.simplemde = null;
+      console.warn('If you set the "default" property to false, then you must provide an object of type IConfig which will describe the editor\'s style and behaveour the the "config" property.');
+    }
   }
 
-  getValue(value:any){
+  getValue(value: any) {
     console.log(this.simplemde.value())
   }
 }
