@@ -1,1 +1,2 @@
-ngx-markdown-editor works!
+<textarea *ngIf="config" #editor cols="30" rows="10"></textarea>
+<button type="button" (click)='getValue(editor.value)'>GET VALUE</button>
